@@ -85,8 +85,8 @@ macro(generate_parameter_library LIB_NAME YAML_FILE)
   # Create the library target
   add_library(${LIB_NAME} INTERFACE ${PARAM_HEADER_FILE} ${VALIDATE_HEADER} ${LOCAL_PARAM_HEADER_FILE})
   target_include_directories(${LIB_NAME} INTERFACE
-    $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/include>
-    $<INSTALL_INTERFACE:include>
+    $<BUILD_INTERFACE:${LIB_INCLUDE_DIR}>
+    $<INSTALL_INTERFACE:include/${PROJECT_NAME}/${LIB_NAME}>
   )
   set_target_properties(${LIB_NAME} PROPERTIES LINKER_LANGUAGE CXX)
   target_link_libraries(${LIB_NAME} INTERFACE
@@ -98,9 +98,8 @@ macro(generate_parameter_library LIB_NAME YAML_FILE)
     tcb_span::tcb_span
     tl_expected::tl_expected
   )
-  install(DIRECTORY ${LIB_INCLUDE_DIR} DESTINATION include)
-  ament_export_dependencies(fmt parameter_traits rclcpp rclcpp_lifecycle rsl tcb_span tl_expected)
-endmacro()
+  install(DIRECTORY ${LIB_INCLUDE_DIR} DESTINATION include/${PROJECT_NAME}/${LIB_NAME})
+endfunction()
 
 
 function(generate_parameter_module LIB_NAME YAML_FILE)
