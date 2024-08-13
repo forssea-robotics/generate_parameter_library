@@ -112,6 +112,8 @@ macro(generate_parameter_library LIB_NAME YAML_FILE)
     tl_expected::tl_expected
   )
   install(DIRECTORY ${LIB_INCLUDE_DIR} DESTINATION include)
+  install(TARGETS ${LIB_NAME} EXPORT ${PROJECT_NAME}Targets)
+  ament_export_targets(${PROJECT_NAME}Targets HAS_LIBRARY_TARGET)
   ament_export_dependencies(fmt parameter_traits rclcpp rclcpp_lifecycle rsl tcb_span tl_expected)
 endmacro()
 
