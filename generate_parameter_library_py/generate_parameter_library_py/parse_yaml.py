@@ -688,8 +688,8 @@ def preprocess_inputs(language, name, value, nested_name_list):
     invalid_keys = value.keys() - valid_keys
     if len(invalid_keys) > 0:
         raise compile_error(
-            "Invalid syntax in parameter %s. '%s' is not valid syntax"
-            % (param_name, next(iter(invalid_keys)))
+            "Invalid syntax in parameter %s. '%s' is not valid syntax. Must be one of: %s"
+            % (param_name, next(iter(invalid_keys)), ', '.join(map(str, valid_keys)))
         )
 
     # optional attributes
