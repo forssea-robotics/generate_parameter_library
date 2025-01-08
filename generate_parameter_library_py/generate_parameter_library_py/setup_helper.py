@@ -32,7 +32,7 @@ import os
 from generate_parameter_library_py.generate_python_module import run
 
 
-def generate_parameter_module(module_name, yaml_file, validation_module=''):
+def generate_parameter_module(module_name, yaml_file, validation_module='', src_dir=None):
     # TODO there must be a better way to do this. I need to find the build directory so I can place the python
     # module there
     build_dir = None
@@ -60,11 +60,13 @@ def generate_parameter_module(module_name, yaml_file, validation_module=''):
                 'site-packages',
                 pkg_name,
             )
-            build_dir = os.path.join(colcon_ws, 'build', pkg_name, pkg_name)
+            build_dir = os.path.join(colcon_ws, 'build', pkg_name, 'build', 'lib', pkg_name)
             break
 
     if build_dir:
         run(os.path.join(build_dir, module_name + '.py'), yaml_file, validation_module)
+        if src_dir:
+            run(os.path.join(src_dir, module_name + '.py'), yaml_file, validation_module)
     if install_dir:
         run(
             os.path.join(install_dir, module_name + '.py'), yaml_file, validation_module
