@@ -52,14 +52,9 @@ def generate_parameter_module(module_name, yaml_file, validation_module='', src_
             tmp = tmp.split('.')
             py_version = f'python{tmp[0]}.{tmp[1]}'
 
-            if not install_base:
-                install_base = os.path.join(colcon_ws, 'install')
-
-            install_base = (
-                install_base if merge_install else os.path.join(install_base, pkg_name)
-            )
             install_dir = os.path.join(
-                install_base,
+                colcon_ws,
+                'install',
                 'lib',
                 py_version,
                 'site-packages',
